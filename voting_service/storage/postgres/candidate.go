@@ -14,22 +14,17 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-// ErrCandidateNotFound represents an error when a candidate is not found.
 var ErrCandidateNotFound = errors.New("candidate not found")
 
-// CandidateDb provides database operation for candidates
 type CandidateDb struct {
 	Db *pgx.Conn
 }
 
-// NewCandidate creates a new instance of CandidateDb
 func NewCandidate(db *pgx.Conn) *CandidateDb {
 	return &CandidateDb{Db: db}
 }
 
-// Create creates a new candidate in the database
 func (CandidateDb *CandidateDb) Create(ctx context.Context, candidate *vote.CandidateCreate) (*vote.Candidate, error) {
-	// Generate a new UUID for the candidate
 	candidateID := uuid.New().String()
 	log.Println("Candidate create postgres")
 	query := `

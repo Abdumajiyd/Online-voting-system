@@ -12,61 +12,58 @@ import (
 
 func NewGin(connPublic, connVote *grpc.ClientConn) *gin.Engine {
 
-	// handler support database connection
 	handler := handler.NewHandler(connPublic, connVote)
 
-	// Connecting to gin router
 	router := gin.Default()
 	router.GET("/api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"}, // Adjust for your specific origins
+		AllowOrigins:     []string{"*"}, 
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 	}))
-	// Election routes
 	election := router.Group("api/v1/election")
 	{
-		election.POST("", handler.CreateElectionHandler)           // POST /api/v1/election
-		election.PUT("", handler.UpdateElectionHandler)            // PUT /api/v1/election
-		election.DELETE("", handler.DeleteElectionHandler)         // DELETE /api/v1/election
-		election.GET("/id", handler.GetElectionByIdHandler)        // GET /api/v1/election/id
-		election.GET("/all", handler.GetAllElectionsHandler)       // GET /api/v1/election/all
-		election.GET("/results", handler.GetCandidateVotesHandler) // POST /api/v1/election/results
+		election.POST("", handler.CreateElectionHandler)           
+		election.PUT("", handler.UpdateElectionHandler)            
+		election.DELETE("", handler.DeleteElectionHandler)         
+		election.GET("/id", handler.GetElectionByIdHandler)        
+		election.GET("/all", handler.GetAllElectionsHandler)       
+		election.GET("/results", handler.GetCandidateVotesHandler) 
 	}
 
 	candidate := router.Group("/api/v1/candidate")
 	{
-		candidate.POST("", handler.CreateCandidateHandler)     // POST /api/v1/candidate
-		candidate.PUT("", handler.UpdateCandidateHandler)      // PUT /api/v1/candidate
-		candidate.DELETE("", handler.DeleteCandidateHandler)   // DELETE /api/v1/candidate
-		candidate.GET("/id", handler.GetCandidateByIdHandler)  // POST /api/v1/candidate/id
-		candidate.GET("/all", handler.GetAllCandidatesHandler) // POST /api/v1/candidate/all
+		candidate.POST("", handler.CreateCandidateHandler)     
+		candidate.PUT("", handler.UpdateCandidateHandler)      
+		candidate.DELETE("", handler.DeleteCandidateHandler)   
+		candidate.GET("/id", handler.GetCandidateByIdHandler)  
+		candidate.GET("/all", handler.GetAllCandidatesHandler) 
 	}
 	publicVote := router.Group("/api/v1/public_vote")
 	{
-		publicVote.POST("", handler.CreatePublicVoteHandler)                 // POST /api/v1/public_vote
-		publicVote.GET("/public/id", handler.GetPublicVoteByPublicIdHandler) // GET /api/v1/public_vote/public/id
-		publicVote.GET("/vote/id", handler.GetPublicVoteByVoteIdHandler)     // GET /api/v1/public_vote/vote/id
-		publicVote.GET("/public/all", handler.GetAllPublicVotesHandler)      // GET /api/v1/public_vote/public/all
-		publicVote.GET("/vote/all", handler.GetAllVotesHandler)              // GET /api/v1/public_vote/vote/all
+		publicVote.POST("", handler.CreatePublicVoteHandler)                 
+		publicVote.GET("/public/id", handler.GetPublicVoteByPublicIdHandler) 
+		publicVote.GET("/vote/id", handler.GetPublicVoteByVoteIdHandler)     
+		publicVote.GET("/public/all", handler.GetAllPublicVotesHandler)      
+		publicVote.GET("/vote/all", handler.GetAllVotesHandler)              
 	}
 	party := router.Group("api/v1/party")
 	{
-		party.POST("", handler.CreatePartyHandler)      // POST /api/v1/party
-		party.PUT("", handler.UpdatePartyHandler)       // PUT /api/v1/party
-		party.DELETE("", handler.DeletePartyHandler)    // DELETE /api/v1/party
-		party.GET("/id", handler.GetPartyByIdHandler)   // GET /api/v1/party/id
-		party.GET("/all", handler.GetAllPartiesHandler) // GET /api/v1/party/all
+		party.POST("", handler.CreatePartyHandler)      
+		party.PUT("", handler.UpdatePartyHandler)      
+		party.DELETE("", handler.DeletePartyHandler)    
+		party.GET("/id", handler.GetPartyByIdHandler)   
+		party.GET("/all", handler.GetAllPartiesHandler) 
 	}
 	public := router.Group("api/v1/public")
 	{
-		public.POST("", handler.CreatePublicHandler)     // POST /api/v1/public
-		public.PUT("", handler.UpdatePublicHandler)      // PUT /api/v1/public
-		public.DELETE("", handler.DeletePublicHandler)   // DELETE /api/v1/public
-		public.GET("/id", handler.GetPublicByIdHandler)  // GET /api/v1/public/id
-		public.GET("/all", handler.GetAllPublicsHandler) // GET /api/v1/public/all
+		public.POST("", handler.CreatePublicHandler)
+		public.PUT("", handler.UpdatePublicHandler)
+		public.DELETE("", handler.DeletePublicHandler)
+		public.GET("/id", handler.GetPublicByIdHandler)  
+		public.GET("/all", handler.GetAllPublicsHandler) 
 	}
 	return router
 }

@@ -21,7 +21,6 @@ type Config struct {
 	DefaultLimit  string
 }
 
-// Load ...
 func Load() Config {
 	if err := godotenv.Load(".env"); err != nil {
 		fmt.Println("No .env file found", err)
@@ -30,19 +29,16 @@ func Load() Config {
 	config := Config{}
 
 	config.HTTPPort = cast.ToString(getOrReturnDefaultValue("HTTP_PORT", ":8080"))
-
 	config.PostgresHost = cast.ToString(getOrReturnDefaultValue("POSTGRES_HOST", "localhost"))
 	config.PostgresPort = cast.ToInt(getOrReturnDefaultValue("POSTGRES_PORT", 5432))
-	config.PostgresUser = cast.ToString(getOrReturnDefaultValue("POSTGRES_USER", "sayyidmuhammad"))
-	config.PostgresPassword = cast.ToString(getOrReturnDefaultValue("POSTGRES_PASSWORD", "root"))
+	config.PostgresUser = cast.ToString(getOrReturnDefaultValue("POSTGRES_USER", "abdumajid"))
+	config.PostgresPassword = cast.ToString(getOrReturnDefaultValue("POSTGRES_PASSWORD", "1202"))
 	config.PostgresDatabase = cast.ToString(getOrReturnDefaultValue("POSTGRES_DATABASE", "vote"))
-
 	config.DefaultOffset = cast.ToString(getOrReturnDefaultValue("DEFAULT_OFFSET", "0"))
 	config.DefaultLimit = cast.ToString(getOrReturnDefaultValue("DEFAULT_LIMIT", "10"))
 
 	return config
 }
-
 func getOrReturnDefaultValue(key string, defaultValue interface{}) interface{} {
 	val, exists := os.LookupEnv(key)
 

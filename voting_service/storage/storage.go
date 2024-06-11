@@ -32,12 +32,8 @@ type CandidateI interface {
 
 type PublicVoteI interface {
 	Create(ctx context.Context, in *vote.PublicVoteCreate) (*vote.PublicVoteRes, error)
-	// Get a public vote by its ID
 	GetByIdPublic(ctx context.Context, in *vote.PublicVoteById) (*vote.PublicVoteRes, error)
-	// Get a vote by its ID
 	GetByIdVote(ctx context.Context, in *vote.VoteById) (*vote.VoteRes, error)
-	// Get all public votes
 	GetAllPublic(ctx context.Context, in *vote.GetAllPublicVoteReq) (*vote.GetAllPublicVoteRes, error)
-	// Get all public votes
 	GetAllVote(ctx context.Context, in *vote.GetAllVoteReq) (*vote.GetAllVoteRes, error)
 }

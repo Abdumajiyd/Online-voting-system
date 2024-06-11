@@ -90,28 +90,25 @@ func (e *ElectionService) GetCandidateVoes(ctx context.Context, electionReq *vot
 }
 
 func ValidElectionDate(openDate, endDate string) bool {
-	// Parse openDate and endDate strings into time.Time objects
 	openTime, err := time.Parse("2006-01-02 15:04:05", openDate)
 	if err != nil {
 		log.Println(err)
-		return false // Invalid open date format
+		return false 
 	}
 
 	endTime, err := time.Parse("2006-01-02 15:04:05", endDate)
 	if err != nil {
 		log.Println(err)
-		return false // Invalid end date format
+		return false 
 	}
 
-	// Check if open date is later than current time
 	if openTime.Before(time.Now()) {
 		log.Println(err)
-		return false // Open date is in the past
+		return false 
 	}
 
-	// Check if open date is before end date
 	if openTime.After(endTime) {
-		return false // Open date is after end date
+		return false 
 	}
-	return true // Election dates are valid
+	return true 
 }

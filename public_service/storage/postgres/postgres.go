@@ -21,7 +21,6 @@ func DBConn() (*Storage, error) {
 		db  *pgx.Conn
 		err error
 	)
-	// Get postgres connection data from .env file
 	cfg := config.Load()
 	dbCon := fmt.Sprintf("postgresql://%s:%s@%s:%d/%s",
 		cfg.PostgresUser,
@@ -30,7 +29,6 @@ func DBConn() (*Storage, error) {
 		cfg.PostgresPort,
 		cfg.PostgresDatabase)
 
-	// Connecting to postgres
 	db, err = pgx.Connect(context.Background(), dbCon)
 	if err != nil {
 		slog.Warn("Unable to connect to database:", err)
